@@ -49,4 +49,4 @@ namespace SchoolCheckIn.Common
         }
     }
 }
-}
+

@@ -37,7 +37,18 @@
     <Reference Include="log4net">
       <HintPath>..\REF\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PetaPoco">
+      <HintPath>..\..\..\..\maipu_code\Code\Wangyj\OnlineIssue\Ref\PetaPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\REF\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -77,9 +88,26 @@
   <ItemGroup>
     <Compile Include="ExceptionLoggingBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RedisHelper.cs" />
+    <Compile Include="RightAttribute.cs" />
+    <Compile Include="RightBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolCheckIn.Account\SchoolCheckIn.Account.csproj">
+      <Project>{532b4189-5480-4041-b0d9-9fed2802eac4}</Project>
+      <Name>SchoolCheckIn.Account</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolCheckIn.CheckIn\SchoolCheckIn.CheckIn.csproj">
+      <Project>{28107645-b6c3-4c9f-a154-af65af2af3b2}</Project>
+      <Name>SchoolCheckIn.CheckIn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolCheckIn.Right\SchoolCheckIn.Right.csproj">
+      <Project>{f43aaee5-d70b-4331-af30-49edd2e5949c}</Project>
+      <Name>SchoolCheckIn.Right</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
