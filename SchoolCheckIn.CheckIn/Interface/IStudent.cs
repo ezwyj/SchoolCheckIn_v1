@@ -13,8 +13,9 @@ namespace SchoolCheckIn.CheckIn.Interface
         void DeleteStuent(Student student);
         void SaveStudent(Student student);
         Student GetStudent(int id);
-        List<Student> GetStudentList(string name,string className);
-
+        List<Student> GetStudentList(string name,string className,DateTime startClassTime,DateTime endClassTime);
+        void AddClass(Class classinfo);
+        void DeleteClass(Class classInfo);
 
     }
 }
