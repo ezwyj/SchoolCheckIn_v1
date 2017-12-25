@@ -10,12 +10,14 @@ namespace SchoolCheckIn.CheckIn.Model
     {
 
         /// <summary>
-        /// 工号，六位字符串
+        /// 工号
         /// </summary>
         public string Badge
         {
             get; set;
         }
+
+        public string EnglishName { get; set; }
         /// <summary>
         /// 姓名
         /// </summary>

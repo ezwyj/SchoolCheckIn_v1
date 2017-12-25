@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SchoolCheckIn.Right.Entity
 {
-    [TableName("ProjectArchive_Right_Operation")]
+    [TableName("Right_Operation")]
     [PrimaryKey("OperationId", AutoIncrement = true)]
     public class Operation 
     {

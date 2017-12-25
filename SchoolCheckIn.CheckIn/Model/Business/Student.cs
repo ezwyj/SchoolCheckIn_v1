@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace SchoolCheckIn.CheckIn.Model
 {
-    public class Client
+    public class Student
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<ClientEx> ExInfo { get; set; }
+        public List<StudentEx> ExInfo { get; set; }
 
         public List<Class> ClassPackage { get; set; }
     }
 
-    public class ClientEx
+    public class StudentEx
     {
         public int Id { get; set; }
         public string KeyNameId { get; set; }

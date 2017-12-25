@@ -16,6 +16,8 @@ namespace SchoolCheckIn.CheckIn.Model
 
         public string InputUser { get; set; }
 
+        public string Level { get; set; }
+
         public DateTime InputTime { get; set; }
 
         public List<ClassEx> ExInfo { get; set; }

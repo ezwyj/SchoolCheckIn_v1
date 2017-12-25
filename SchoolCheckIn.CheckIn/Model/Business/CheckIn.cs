@@ -10,7 +10,7 @@ namespace SchoolCheckIn.CheckIn.Model
     {
         public int Id { get; set; }
 
-        public int CheckInClientId { get; set; }
+        public Student Student { get; set; }
 
         public DateTime CheckInTime { get; set; }
     }
