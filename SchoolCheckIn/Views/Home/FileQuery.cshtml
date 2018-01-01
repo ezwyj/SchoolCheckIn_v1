@@ -1,0 +1,252 @@
+﻿@{
+    ViewBag.Title = "文件适用项目及产品查询";
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <div class="query-param">
+        <div class="row form-group">
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name required">文件名称</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.FileName" ng-change="onFileChange()" auto-complete="fileNameAcOpt" callback="selectFile(data)">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">文件大类</label>
+                    <div class="item-static item-bordered">
+                        <span ng-bind="param.MainClassName"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">文件小类</label>
+                    <div class="item-static item-bordered">
+                        <span ng-bind="param.SubClassName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>查询结果</h5>
+            <div class="block-option">
+                <button class="btn btn-sm btn-primary" ng-click="query()">
+                    <span class="fa fa-search"></span>
+                    <span>查询</span>
+                </button>
+                <button class="btn btn-sm btn-default" export-excel="export-content">
+                    <span class="fa fa-download"></span>
+                    <span>导出</span>
+                </button>
+            </div>
+        </div>
+        <div class="block-body" id="export-content">
+            <div class="table-box">
+                <table class="table table-colorheader table-bordered">
+                    <colgroup>
+                        <col width="150">
+                        <col>
+                        <col width="150">
+                        <col width="180">
+                        <col width="80">
+                        <col width="80">
+                        <col width="150">
+                        <col width="70">
+                        <col width="70">
+                        <col width="100">
+                        <col width="70">
+                        <col width="70">
+                        <col width="70">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th colspan="8" style="background-color: #eee; border: 1px solid #ddd;">文件名称</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">版本号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">文件类型</th>
+                            <th colspan="3" style="background-color: #eee; border: 1px solid #ddd;">版本分支</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8">
+                                <span ng-bind="file.FileName"></span>
+                            </td>
+                            <td style="vnd.ms-excel.numberformat: @Html.Raw("@");">
+                                <span ng-bind="file.FileVersion"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="file.FileType"></span>
+                            </td>
+                            <td colspan="3">
+                                <span ng-bind="file.VersionBranch"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th colspan="5" style="background-color: #eee; border: 1px solid #ddd;">来源研发项目</th>
+                            <th colspan="8" style="background-color: #eee; border: 1px solid #ddd;">适用产品范围</th>
+                        </tr>
+                        <tr>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">项目版本号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">项目名称</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">项目代号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">通知编号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">归档版本号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">物品编码</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">物品型号</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">硬件版本</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">发布类型</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">版本类型</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">版本状态</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">产品阶段</th>
+                            <th style="background-color: #eee; border: 1px solid #ddd;">销售状态</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-repeat="project in projectList">
+                        <tr>
+                            <td rowspan="{{project.ProductList.length}}">
+                                <span ng-bind="project.ProjectCode"></span>
+                            </td>
+                            <td rowspan="{{project.ProductList.length}}">
+                                <span ng-bind="project.ProjectName"></span>
+                            </td>
+                            <td rowspan="{{project.ProductList.length}}">
+                                <span ng-bind="project.ProjectCodeAbbr"></span>
+                            </td>
+                            <td rowspan="{{project.ProductList.length}}">
+                                <span ng-bind="project.NoticeNo"></span>
+                            </td>
+                            <td rowspan="{{project.ProductList.length}}">
+                                <span ng-bind="project.ArchiveVersionCode"></span>
+                            </td>
+                            <td style="vnd.ms-excel.numberformat: @Html.Raw("@");">
+                                <span ng-bind="project.ProductList[0].ItemNumber"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].Model"></span>
+                            </td>
+                            <td style="vnd.ms-excel.numberformat: @Html.Raw("@");">
+                                <span ng-bind="project.ProductList[0].HardwareRev"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].PublishTypeKey"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].VersionType"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].VersionStatus"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].State"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="project.ProductList[0].SaleState"></span>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="product in project.ProductList" ng-if="$index > 0">
+                            <td style="vnd.ms-excel.numberformat: @Html.Raw("@");">
+                                <span ng-bind="product.ItemNumber"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.Model"></span>
+                            </td>
+                            <td style="vnd.ms-excel.numberformat: @Html.Raw("@");">
+                                <span ng-bind="product.HardwareRev"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.PublishTypeKey"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.VersionType"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.VersionStatus"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.State"></span>
+                            </td>
+                            <td>
+                                <span ng-bind="product.SaleState"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 项目详情popover -->
+<script type="text/ng-template" id="popover-project.html">
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.ProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目名称：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.ProjectName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目代号：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.ProjectCodeAbbr"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">产品线：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.CPX"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">版本经理：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.ProjectManager"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">来源版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="data.SourceProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="~/assets/js/Home/FileQuery.js?v=@UtilHelper.StaticVersion"></script>
+}

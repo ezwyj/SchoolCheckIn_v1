@@ -7,7 +7,7 @@ using SchoolCheckIn.CheckIn.Model;
 
 namespace SchoolCheckIn.CheckIn.Interface
 {
-    interface IStudent
+    public interface IStudent
     {
         void ImportStudent(string file);
         void DeleteStuent(Student student);

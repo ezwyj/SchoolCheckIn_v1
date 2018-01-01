@@ -42,7 +42,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="PetaPoco">
-      <HintPath>..\..\..\..\maipu_code\Code\Wangyj\OnlineIssue\Ref\PetaPoco.dll</HintPath>
+      <HintPath>..\REF\PetaPoco.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis">
       <HintPath>..\REF\StackExchange.Redis.dll</HintPath>
@@ -96,10 +96,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SchoolCheckIn.Account\SchoolCheckIn.Account.csproj">
-      <Project>{532b4189-5480-4041-b0d9-9fed2802eac4}</Project>
-      <Name>SchoolCheckIn.Account</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SchoolCheckIn.CheckIn\SchoolCheckIn.CheckIn.csproj">
       <Project>{28107645-b6c3-4c9f-a154-af65af2af3b2}</Project>
       <Name>SchoolCheckIn.CheckIn</Name>

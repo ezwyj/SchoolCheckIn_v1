@@ -1,0 +1,211 @@
+﻿@{
+    ViewBag.Title = "值集设置";
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-header">
+                    <h5>集列表</h5>
+                    <div class="block-option">
+                        <button class="btn btn-sm btn-primary" ng-click="addSet()">
+                            <span class="fa fa-plus"></span>
+                            <span>增加</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-body">
+                    <div class="table-box">
+                        <table class="table table-colorheader table-outline">
+                            <thead>
+                                <tr>
+                                    <th width="40">ID</th>
+                                    <th width="150">名称</th>
+                                    <th>说明</th>
+                                    <th width="70">是否启用</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in setList" ng-class="{'bg-info': item.Id == activeSet.Id}" ng-click="getValueList(item)">
+                                    <td>
+                                        <div text-truncation="item.Id"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.Text"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.Description"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.IsEnabled ? '是' : '否'"></div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info" title="编辑" ng-click="editSet(item, $event)">
+                                            <span class="fa fa-edit"></span>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" title="删除" ng-click="delSet(item, $event)">
+                                            <span class="fa fa-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="block">
+                <div class="block-header">
+                    <h5>值列表</h5>
+                    <div class="block-option">
+                        <button class="btn btn-sm btn-primary" ng-click="addValue()">
+                            <span class="fa fa-plus"></span>
+                            <span>增加</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="block-body">
+                    <div class="table-box">
+                        <table class="table table-colorheader table-outline">
+                            <thead>
+                                <tr>
+                                    <th width="40">ID</th>
+                                    <th width="200">值</th>
+                                    <th>文本</th>
+                                    <th width="40">排序</th>
+                                    <th width="70">是否启用</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in valueList">
+                                    <td>
+                                        <div text-truncation="item.Id"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.Value"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.Text"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.Sort"></div>
+                                    </td>
+                                    <td>
+                                        <div text-truncation="item.IsEnabled ? '是' : '否'"></div>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-info" title="编辑" ng-click="editValue(item)">
+                                            <span class="fa fa-edit"></span>
+                                        </button>
+                                        <button class="btn btn-xs btn-danger" title="删除" ng-click="delValue(item)">
+                                            <span class="fa fa-remove"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 增加/修改集layer -->
+<script type="text/ng-template" id="layer-upsertSet.html">
+    <div class="form">
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name required">名称</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="upsertSetModel.Text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">排序</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="upsertSetModel.Sort" maxlength="8">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">是否启用</div>
+                    <div class="item-control">
+                        <input type="checkbox" class="checkbox-b" ng-model="upsertSetModel.IsEnabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name">说明</div>
+                    <div class="item-control">
+                        <textarea class="form-control input-sm" ng-model="upsertSetModel.Description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 增加/修改值layer -->
+<script type="text/ng-template" id="layer-upsertValue.html">
+    <div class="form">
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name required">值</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="upsertValueModel.Value">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name">文本</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="upsertValueModel.Text">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">排序</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="upsertValueModel.Sort" maxlength="8">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">是否启用</div>
+                    <div class="item-control">
+                        <input type="checkbox" class="checkbox-b" ng-model="upsertValueModel.IsEnabled">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="~/assets/js/ValueSet/Index.js?v=@UtilHelper.StaticVersion"></script>
+}

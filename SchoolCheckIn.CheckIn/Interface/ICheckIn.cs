@@ -8,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SchoolCheckIn.CheckIn.Interface
 {
-    interface ICheckIn
+    public interface ICheckIn
     {
         Student CheckIn(string QrCode);
         Student CheckIn(Image image);

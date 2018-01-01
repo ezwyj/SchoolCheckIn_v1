@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "任务列表";
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>待处理任务列表</h5>
+        </div>
+        <div class="block-body">
+            <div class="table-box">
+                <table class="table table-outline table-colorheader">
+                    <thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th width="200">项目版本号</th>
+                            <th width="300">项目名称</th>
+                            <th width="180">通知编号</th>
+                            <th width="80">归档版本号</th>
+                            <th width="90">归档截止时间</th>
+                            <th>待处理事项</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in pendDataList">
+                            <td>
+                                <a href="" target="_blank" ng-href="{{rootUrl + 'Archive/Create/' + item.ProjectVersionInfoId + '#/' + pathMap.getName(item.WorkItem)}}" ng-bind="item.ProjectVersionInfoId"></a>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis" title="{{item.ProjectCode}}">
+                                    <span class="view-more" uib-popover-template="'popover-project.html'" popover-placement="right" popover-trigger="'outsideClick'" ng-bind="item.ProjectCode"></span>
+                                </div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ProjectName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.NoticeNo"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveVersionCode"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveDeadline | formatMSDate : 'YYYY-MM-DD'"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.WorkItemExp"></div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!pendDataList.length">
+                            <td class="text-center" colspan="7">无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-pager" pager="pendPagerOpt" output="pendDataList"></div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>已处理他人未完成任务列表</h5>
+        </div>
+        <div class="block-body">
+            <div class="table-box">
+                <table class="table table-outline table-colorheader">
+                    <thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th width="200">项目版本号</th>
+                            <th width="300">项目名称</th>
+                            <th width="180">通知编号</th>
+                            <th width="80">归档版本号</th>
+                            <th width="90">归档截止时间</th>
+                            <th width="250">待处理事项</th>
+                            <th width="80">当前责任人</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in finishDataList">
+                            <td>
+                                <a href="" target="_blank" title="查看" ng-href="{{rootUrl + 'Archive/Detail/' + item.ProjectVersionInfoId + '#/' + pathMap.getName(item.WorkItem)}}" ng-bind="item.ProjectVersionInfoId"></a>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis" title="{{item.ProjectCode}}">
+                                    <span class="view-more" uib-popover-template="'popover-project.html'" popover-placement="right" popover-trigger="'outsideClick'">
+                                        <span ng-bind="item.ProjectCode"></span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ProjectName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.NoticeNo"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveVersionCode"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveDeadline | formatMSDate : 'YYYY-MM-DD'"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.WorkItemExp"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.OperatorName"></div>
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-warning" title="邮件催办" ng-click="notice(item, 'Email')">
+                                    <span class="fa fa-envelope"></span>
+                                </button>
+                                <button class="btn btn-xs btn-warning" title="短信催办" ng-click="notice(item, 'SMS')">
+                                    <span class="fa fa-comments"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-if="!finishDataList.length">
+                            <td class="text-center" colspan="9">无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-pager" pager="finishPagerOpt" output="finishDataList"></div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>经办任务列表</h5>
+        </div>
+        <div class="block-body">
+            <div class="table-box">
+                <table class="table table-outline table-colorheader">
+                    <thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th width="200">项目版本号</th>
+                            <th width="300">项目名称</th>
+                            <th width="180">通知编号</th>
+                            <th width="80">归档版本号</th>
+                            <th width="90">归档截止时间</th>
+                            <th>已处理事项</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in handleDataList">
+                            <td>
+                                <a href="" target="_blank" title="查看" ng-href="{{rootUrl + 'Archive/Detail/' + item.ProjectVersionInfoId + '#/' + pathMap.getName(item.WorkItem)}}" ng-bind="item.ProjectVersionInfoId"></a>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis" title="{{item.ProjectCode}}">
+                                    <span class="view-more" uib-popover-template="'popover-project.html'" popover-placement="right" popover-trigger="'outsideClick'">
+                                        <span ng-bind="item.ProjectCode"></span>
+                                    </span>
+                                </div> 
+                            </td>
+                            <td>
+                                <div text-truncation="item.ProjectName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.NoticeNo"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveVersionCode"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveDeadline | formatMSDate : 'YYYY-MM-DD'"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.WorkItemExp"></div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!handleDataList.length">
+                            <td class="text-center" colspan="7">无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-pager" pager="handlePagerOpt" output="handleDataList"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 项目详情popover -->
+<script type="text/ng-template" id="popover-project.html">
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目名称：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目代号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectCodeAbbr"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">产品线：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.CPX"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">版本经理：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectManager"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">来源版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.SourceProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="~/assets/js/Home/TaskList.js?v=@UtilHelper.StaticVersion"></script>
+}

@@ -17,6 +17,12 @@ namespace SchoolCheckIn.Right.Service
         {
             _db = db;
         }
+        public bool Login(string userName ,string pwd)
+        {
+            string sql = "Select * from Right_User where badge='" + userName + "' and password='"+pwd+"'";
+
+            return _db.Fetch<User>(sql).Count>0;
+        }
 
         public bool HaveRight(string badge, string resource, string operationCode)
         {

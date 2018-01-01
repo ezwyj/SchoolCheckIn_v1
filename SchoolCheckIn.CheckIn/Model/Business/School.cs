@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolCheckIn.CheckIn.Model.Business
+namespace SchoolCheckIn.CheckIn.Model
 {
     public class School
     {

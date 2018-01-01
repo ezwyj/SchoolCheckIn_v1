@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolCheckIn.Right.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace SchoolCheckIn.CheckIn.Model
         /// 姓名
         /// </summary>
 
+        public User User { get; set; }
+
         public string Name { get; set; }
         /// <summary>
         /// 邮箱
@@ -31,8 +34,9 @@ namespace SchoolCheckIn.CheckIn.Model
 
         public Department Department { get; set; }
 
-        public string JobId { get; set; }
-        public string Job { get; set; }
+      
+
+
 
     }
 }

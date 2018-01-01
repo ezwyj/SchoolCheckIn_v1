@@ -1,0 +1,315 @@
+﻿@{
+    ViewBag.Title = "权限设置";
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <ul class="nav nav-pills" role="tablist">
+        <li ng-class="{'active': activeTab == 'rightObject'}"><a href="" ng-click="changeTab('rightObject')">权限对象</a></li>
+        <li ng-class="{'active': activeTab == 'rightRole'}"><a href="" ng-click="changeTab('rightRole')">权限角色</a></li>
+        <li ng-class="{'active': activeTab == 'rightOption'}"><a href="" ng-click="changeTab('rightOption')">权限操作</a></li>
+        <li ng-class="{'active': activeTab == 'rightAssign'}"><a href="" ng-click="changeTab('rightAssign')">权限分配</a></li>
+    </ul>
+    <hr>
+    <div class="tab-content">
+        <div class="tab-pane" ng-class="{'active': activeTab == 'rightObject'}">
+            <div ng-controller="rightObjectCtrl">
+                <div class="option-bar text-right">
+                    <button class="btn btn-sm btn-primary" ng-click="addObject()">
+                        <span class="fa fa-plus"></span>
+                        <span>增加对象</span>
+                    </button>
+                </div>
+                <div class="table-box">
+                    <table class="table table-colorheader table-outline">
+                        <thead>
+                            <tr>
+                                <th width="800">对象名称</th>
+                                <th width="70">对象类型</th>
+                                <th>备注</th>
+                                <th width="100">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in objectList">
+                                <td>
+                                    <div text-truncation="item.Name"></div>
+                                </td>
+                                <td>
+                                    <div text-truncation="item.ObjectTypeExp"></div>
+                                </td>
+                                <td>
+                                    <div text-truncation="item.Remark"></div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-info" title="编辑" ng-click="editObject(item)">
+                                        <span class="fa fa-edit"></span>
+                                    </button>
+                                    <button class="btn btn-xs btn-danger" title="删除" ng-click="delObject(item)">
+                                        <span class="fa fa-remove"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" ng-class="{'active': activeTab == 'rightRole'}">
+            <div ng-controller="rightRoleCtrl">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="option-bar text-right">
+                            <button class="btn btn-sm btn-primary" ng-click="addRole()">
+                                <span class="fa fa-plus"></span>
+                                <span>增加角色</span>
+                            </button>
+                        </div>
+                        <div class="table-box">
+                            <table class="table table-colorheader table-outline">
+                                <thead>
+                                    <tr>
+                                        <th>角色名称</th>
+                                        <th width="50">排序</th>
+                                        <th width="100">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in roleList" ng-class="{'bg-info': item.RoleId == activeRole.RoleId}" ng-click="viewUser(item, $event)">
+                                        <td>
+                                            <div text-truncation="item.Name"></div>
+                                        </td>
+                                        <td>
+                                            <div text-truncation="item.Sort"></div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-xs btn-info" title="编辑" ng-click="editRole(item, $event)">
+                                                <span class="fa fa-edit"></span>
+                                            </button>
+                                            <button class="btn btn-xs btn-danger" title="删除" ng-click="delRole(item, $event)">
+                                                <span class="fa fa-remove"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="option-bar text-right">
+                            <button class="btn btn-sm btn-primary" ng-disabled="!activeRole" ng-click="addUser()">
+                                <span class="fa fa-plus"></span>
+                                <span>增加用户</span>
+                            </button>
+                        </div>
+                        <div class="table-box">
+                            <table class="table table-colorheader table-outline">
+                                <thead>
+                                    <tr>
+                                        <th width="100">姓名</th>
+                                        <th width="100">工号</th>
+                                        <th>部门</th>
+                                        <th width="50">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in userList">
+                                        <td>
+                                            <div text-truncation="item.UserName"></div>
+                                        </td>
+                                        <td>
+                                            <div text-truncation="item.Badge"></div>
+                                        </td>
+                                        <td>
+                                            <div text-truncation="item.Department"></div>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-xs btn-danger" title="删除" ng-click="delUser(item)">
+                                                <span class="fa fa-remove"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" ng-class="{'active': activeTab == 'rightOption'}">
+            <div ng-controller="rightOptionCtrl">
+                <div class="option-bar text-right">
+                    <button class="btn btn-sm btn-primary" ng-click="addOption()">
+                        <span class="fa fa-plus"></span>
+                        <span>增加操作</span>
+                    </button>
+                </div>
+                <div class="table-box">
+                    <table class="table table-colorheader table-outline">
+                        <thead>
+                            <tr>
+                                <th width="200">操作代码</th>
+                                <th>描述</th>
+                                <th width="100">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in optionList">
+                                <td>
+                                    <div text-truncation="item.OperationCode"></div>
+                                </td>
+                                <td>
+                                    <div text-truncation="item.Description"></div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-info" title="编辑" ng-click="editOption(item)">
+                                        <span class="fa fa-edit"></span>
+                                    </button>
+                                    <button class="btn btn-xs btn-danger" title="删除" ng-click="delOption(item)">
+                                        <span class="fa fa-remove"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" ng-class="{'active': activeTab == 'rightAssign'}">
+            <div ng-controller="rightAssignCtrl">
+                <div class="option-bar row">
+                    <div class="col-md-3">
+                        <div class="item item-sm">
+                            <div class="item-name">角色</div>
+                            <div class="item-control">
+                                <select class="form-control input-sm" ng-options="item.RoleId as item.Name for item in roleList" ng-model="queryModel.roleId" ng-change="getPermission()">
+                                    <option value="">-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 text-right">
+                        <button class="btn btn-sm btn-primary" ng-click="savePermission()" ng-disabled="!queryModel.roleId">
+                            <span class="fa fa-save"></span>
+                            <span>保存</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-table">
+                    <table class="table table-colorheader table-outline">
+                        <thead>
+                            <tr>
+                                <th>权限对象 \ 权限操作</th>
+                                <th width="120" ng-repeat="option in optionList" ng-bind="option.OperationCode"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="object in objectList">
+                                <td>
+                                    <div text-truncation="object.Name"></div>
+                                </td>
+                                <td ng-repeat="option in optionList">
+                                    <input type="checkbox" class="checkbox-b" ng-model="permissionObj[object.ObjectId][option.OperationId]">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 增加/编辑权限对象layer -->
+<script type="text/ng-template" id="layer-upsertObject.html">
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name required">对象名称</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="objectModel.Name">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name required">对象类型</div>
+                    <div class="item-control">
+                        <select class="form-control input-sm" ng-options="item.Key as item.Value for item in objectTypeList" ng-model="objectModel.ObjectType">
+                            <option value="">-</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name" ng-class="{'required': moduleModel.moduleID }">备注</div>
+                    <div class="item-control">
+                        <textarea class="form-control input-sm" ng-model="objectModel.Remark"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 增加/编辑权限角色layer -->
+<script type="text/ng-template" id="layer-upsertRole.html">    
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name">角色名称</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="roleModel.Name">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name">排序</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="roleModel.Sort" maxlength="8">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<!-- 增加/编辑权限操作layer -->
+<script type="text/ng-template" id="layer-upsertOption.html">
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name required">操作代码</div>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="optionModel.OperationCode">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="item item-sm">
+                    <div class="item-name">描述</div>
+                    <div class="item-control">
+                        <textarea class="form-control input-sm" ng-model="optionModel.Description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="~/assets/js/Right/Index.js?v=@UtilHelper.StaticVersion"></script>
+}

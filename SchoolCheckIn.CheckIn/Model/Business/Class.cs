@@ -8,11 +8,7 @@ namespace SchoolCheckIn.CheckIn.Model
 {
     public class Class
     {
-        public string Name { get; set; }
 
-        public int Id { get; set; }
-
-        public int TotalTime { get; set; }
 
         public string InputUser { get; set; }
 
@@ -21,6 +17,20 @@ namespace SchoolCheckIn.CheckIn.Model
         public DateTime InputTime { get; set; }
 
         public List<ClassEx> ExInfo { get; set; }
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
+        public string Teacher { get; set; }
+        /// <summary>
+        /// 课时
+        /// </summary>
+        public int ClassTime { get; set; }
+
+        public DateTime StartTime { get; set; }
+
+        public DateTime EndTime { get; set; }
     }
 
     public class ClassEx

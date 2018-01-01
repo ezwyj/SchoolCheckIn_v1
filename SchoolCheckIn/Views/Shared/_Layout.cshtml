@@ -1,0 +1,147 @@
+﻿@using SchoolCheckIn.CheckIn.Model;
+@{
+    var user = new UserEntity();
+    try
+    {
+        user = UserEntity.GetCurrentUser();
+        if (user == null)
+        {
+            Response.Redirect("~/Account/Login?errorMsg=用户信息错误，请重新登录");
+            return;
+        }
+    }
+    catch (Exception)
+    {
+        Response.Redirect("~/Account/Login?errorMsg=用户信息错误，请重新登录");
+    }
+}
+
+<!--[if lt IE 9]>
+    <script>
+        if (location.pathname !== '@Url.Content("~/Common/OldBrowserTips")') {
+            location.href = '@Url.Content("~/Common/OldBrowserTips")';
+        }
+    </script>
+<![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/plugins.css?v=@UtilHelper.StaticVersion">
+    <link rel="stylesheet" href="~/assets/css/tlayer.css?v=@UtilHelper.StaticVersion">
+    <link rel="stylesheet" href="~/assets/css/common.css?v=@UtilHelper.StaticVersion">
+    @RenderSection("styles", false)
+    <link rel="stylesheet" href="~/assets/css/site.css?v=@UtilHelper.StaticVersion">
+    <!--[if lt IE 9]>
+        <script src="~/assets/js/lib/html5shiv.min.js"></script>
+        <script src="~/assets/js/lib/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        var OP_CONFIG = {
+            badge: '@user.Badge',
+            rootUrl: '@Url.Content("~/")',
+            staticVersion: '@UtilHelper.StaticVersion'
+        };
+    </script>
+    <script src="~/assets/js/lib/require.min.js"></script>
+    <script src="~/assets/js/config.js?v=@UtilHelper.StaticVersion"></script>
+</head>
+<body ng-controller="pageCtrl">
+    <!--头部-->
+    <div class="header" id="header">
+        <div class="navbar navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button class="collapsed navbar-toggle" type="button">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/">
+                        <img src="~/assets/img/logo_w.png" alt="logo">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li ng-class="{active: path == ''}">
+                            <a href="~/">任务列表</a>
+                        </li>
+                        <li ng-class="{active: path.indexOf('Archive/Create') > -1}">
+                            <a href="~/Archive/Create">发起版本归档</a>
+                        </li>
+                        <li ng-class="{active: path == 'Home/ProductTable' || path == 'Home/Query' || path == 'Home/FileQuery'}">
+                            <a>系统查询</a>
+                            <div class="submenu-box">
+                                <ul class="submenu-list">
+                                    <li>
+                                        <a href="~/Home/ProductTable">产品分表查询</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Home/Query">综合查询</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Home/FileQuery">文件适用项目及产品查询</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li ng-class="{active: path.indexOf('Config/') > -1}">
+                            <a>系统设置</a>
+                            <div class="submenu-box">
+                                <ul class="submenu-list">
+                                    <li>
+                                        <a href="~/Config/MainClass">大类设置</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Config/SubClass">小类设置</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Config/DownloadRight">文件下载权限设置</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Config/SVGlobalRight">重大测试版本通用设置</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Config/SVSpecialRight">重大测试版本专用设置</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li ng-class="{active: path == 'ValueSet/Index'}">
+                            <a href="~/ValueSet/Index">值集设置</a>
+                        </li>
+                        <li ng-class="{active: path == 'Right/Index'}">
+                            <a href="~/Right/Index">权限设置</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <div class="navbar-text">
+                                <img class="avatar" src="~/assets/img/avatar.png" alt="头像">
+                                <span>欢迎您，@user.Name</span>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="" class="navbar-link" ng-click="logout()">退出</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--内容-->
+    <div class="main" id="main">
+        @RenderBody()
+    </div>
+    <!--脚部-->
+    <div class="footer" id="footer">
+        <p class="text-center">&copy; 2016 - @DateTime.Now.Year @ViewBag[""]</p>
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

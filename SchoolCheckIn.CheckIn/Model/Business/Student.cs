@@ -14,6 +14,8 @@ namespace SchoolCheckIn.CheckIn.Model
         public List<StudentEx> ExInfo { get; set; }
 
         public List<Class> ClassPackage { get; set; }
+
+        public bool IsHide { get; set; }
     }
 
     public class StudentEx

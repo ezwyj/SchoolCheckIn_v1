@@ -1,0 +1,243 @@
+﻿@{
+    ViewBag.Title = "项目版本综合查询";
+    var archiveAssignService = new ProjectArchive.Archive.Service.ArchiveAssignService();
+    var productLineList = archiveAssignService.GetProductLineList();
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/assets/plugins/datetimepicker/bootstrap-datetimepicker.min.css">
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <div class="query-param" enter-handler="query(1)">
+        <div class="row margin-bottom">
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">项目版本号</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.ProjectCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">项目名称</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.ProjectName">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">版本经理</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.ProjectManager">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">来源版本号</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.SourceProjectCode">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">项目代号</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.ProjectCodeAbbr">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">产品线</label>
+                    <div class="item-control">
+                        <select class="form-control input-sm" ng-model="param.CPX">
+                            <option value=""></option>
+                            @foreach (var item in productLineList)
+                            {
+                                <option value="@item">@item</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">通知编号</label>
+                    <div class="item-control">
+                        <input type="text" class="form-control input-sm" ng-model="param.NoticeNo">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">归档状态</label>
+                    <div class="item-control">
+                        <select class="form-control input-sm" ng-options="item.key as item.value for item in archiveStatusList" ng-model="param.ArchiveStatus"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="item item-sm">
+                    <label class="item-name">发布时间</label>
+                    <div class="item-control">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control bg-white" ng-model="param.ArchiveStartTime" dt-picker readonly>
+                            <span class="input-group-addon">-</span>
+                            <input type="text" class="form-control bg-white" ng-model="param.ArchiveEndTime" dt-picker readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>研发版本项目列表</h5>
+            <div class="block-option">
+                <button class="btn btn-sm btn-primary" ng-click="query(1)">
+                    <span class="fa fa-search"></span>
+                    <span>查询</span>
+                </button>
+                <a href="" class="btn btn-sm btn-default" form-submit url="{{rootUrl}}Archive/ExportMainInfo" param="exportExcel()">
+                    <span class="fa fa-download"></span>
+                    <span>导出</span>
+                </a>
+            </div>
+        </div>
+        <div class="block-body">
+            <div class="table-box">
+                <table class="table table-outline table-colorheader">
+                    <thead>
+                        <tr>
+                            <th width="50">序号</th>
+                            <th width="200">项目版本号</th>
+                            <th>项目名称</th>
+                            <th width="200">来源版本号</th>
+                            <th width="180">通知编号</th>
+                            <th width="70">涉及硬件</th>
+                            <th width="80">归档版本号</th>
+                            <th width="120">归档状态</th>
+                            <th width="80">发布时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in dataList">
+                            <td>
+                                <a href="" target="_blank" title="查看" ng-href="{{rootUrl + 'Archive/Detail/' + item.Id + '#/Archive'}}" ng-bind="item.Id"></a>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis" title="{{item.ProjectCode}}">
+                                    <span class="view-more" uib-popover-template="'popover-project.html'" popover-placement="right" popover-trigger="'outsideClick'">
+                                        <span ng-bind="item.ProjectCode"></span>
+                                    </span>
+                                </div> 
+                            </td>
+                            <td>
+                                <div text-truncation="item.ProjectName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.SourceProjectCode"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.NoticeNo"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.IsInvolveHardware ? '是' : '否'"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveVersionCode"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveStatusExp"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ReleaseTime | formatMSDate : 'YYYY-MM-DD'"></div>
+                            </td>
+                        </tr>
+                        <tr ng-if="!dataList.length">
+                            <td class="text-center" colspan="9">无数据</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-pager" pager="pagerOpt" request="requestData" output="dataList"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 项目详情popover -->
+<script type="text/ng-template" id="popover-project.html">
+    <div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目名称：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectName"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">项目代号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectCodeAbbr"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">产品线：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.CPX"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row margin-bottom">
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">版本经理：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.ProjectManager"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="item item-sm">
+                    <div class="item-name">来源版本号：</div>
+                    <div class="item-static">
+                        <span ng-bind="item.SourceProjectCode"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+@section scripts {
+    <script src="~/assets/js/Home/Query.js?v=@UtilHelper.StaticVersion"></script>
+}

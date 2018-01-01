@@ -76,6 +76,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PetaPoco">
+      <HintPath>..\REF\PetaPoco.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -130,6 +133,171 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\bootstrap-theme.min.css" />
+    <Content Include="assets\css\bootstrap.min.css" />
+    <Content Include="assets\css\common.css" />
+    <Content Include="assets\css\login.css" />
+    <Content Include="assets\css\plugins.css" />
+    <Content Include="assets\css\site.css" />
+    <Content Include="assets\css\tlayer.css" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="assets\img\album-arrow.png" />
+    <Content Include="assets\img\arrows.png" />
+    <Content Include="assets\img\avatar.png" />
+    <Content Include="assets\img\checkbox.png" />
+    <Content Include="assets\img\close.png" />
+    <Content Include="assets\img\error.png" />
+    <Content Include="assets\img\error_page.png" />
+    <Content Include="assets\img\file.png" />
+    <Content Include="assets\img\gallery_icon.png" />
+    <Content Include="assets\img\icon_success.gif" />
+    <Content Include="assets\img\icon_uploading.gif" />
+    <Content Include="assets\img\icon_waiting.gif" />
+    <Content Include="assets\img\layer-cancel.png" />
+    <Content Include="assets\img\layer-icon.png" />
+    <Content Include="assets\img\layer-loading.gif" />
+    <Content Include="assets\img\layer-tips.png" />
+    <Content Include="assets\img\loading_16.gif" />
+    <Content Include="assets\img\loading_31.gif" />
+    <Content Include="assets\img\loading_32.gif" />
+    <Content Include="assets\img\locked.png" />
+    <Content Include="assets\img\login_bg.jpg" />
+    <Content Include="assets\img\logo.png" />
+    <Content Include="assets\img\logo_w.png" />
+    <Content Include="assets\img\pro.png" />
+    <Content Include="assets\img\progress.gif" />
+    <Content Include="assets\img\tn-icon-file.png" />
+    <Content Include="assets\img\user.png" />
+    <Content Include="assets\js\app.js" />
+    <Content Include="assets\js\Archive\Create\Archive.js" />
+    <Content Include="assets\js\Archive\Create\ArchiveByFileCategory.js" />
+    <Content Include="assets\js\Archive\Create\ArchiveByProduct.js" />
+    <Content Include="assets\js\Archive\Create\CompareFile.js" />
+    <Content Include="assets\js\Archive\Create\index.js" />
+    <Content Include="assets\js\Archive\Create\ManageFile.js" />
+    <Content Include="assets\js\Archive\Create\ReviewByFileCategory.js" />
+    <Content Include="assets\js\Archive\Create\ReviewByFileCategoryDetail.js" />
+    <Content Include="assets\js\Archive\Create\ReviewByProduct.js" />
+    <Content Include="assets\js\Archive\Create\ReviewByProductDetail.js" />
+    <Content Include="assets\js\Archive\Create\ReviewIntegrity.js" />
+    <Content Include="assets\js\Archive\Create\ReviewInvolvedProduct.js" />
+    <Content Include="assets\js\Archive\Create\ReviewProductApplication.js" />
+    <Content Include="assets\js\Archive\Create\ReviewProductHistory.js" />
+    <Content Include="assets\js\Archive\Create\ReviewProductHistoryDetail.js" />
+    <Content Include="assets\js\Archive\Create\ReviewProductProperty.js" />
+    <Content Include="assets\js\Archive\Create\SecurityReview.js" />
+    <Content Include="assets\js\Archive\Create\SetArchiveLiableUser.js" />
+    <Content Include="assets\js\Archive\Create\SetArchiveUserAndReviewUser.js" />
+    <Content Include="assets\js\Archive\Create\SetInvolvedProduct.js" />
+    <Content Include="assets\js\Archive\Create\SetProductApplication.js" />
+    <Content Include="assets\js\Archive\Create\SetProductHistory.js" />
+    <Content Include="assets\js\Archive\Create\SetProductHistoryDetail.js" />
+    <Content Include="assets\js\Archive\Create\SetProductProperty.js" />
+    <Content Include="assets\js\Archive\Create\StartArchive.js" />
+    <Content Include="assets\js\Archive\Detail\Archive.js" />
+    <Content Include="assets\js\Archive\Detail\index.js" />
+    <Content Include="assets\js\Archive\Detail\Review.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewIntegrity.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewInvolvedProduct.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewProductApplication.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewProductHistory.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewProductHistoryDetail.js" />
+    <Content Include="assets\js\Archive\Detail\ReviewProductProperty.js" />
+    <Content Include="assets\js\Archive\Detail\SecurityReview.js" />
+    <Content Include="assets\js\Archive\Detail\SetArchiveLiableUser.js" />
+    <Content Include="assets\js\Archive\Detail\SetArchiveUserAndReviewUser.js" />
+    <Content Include="assets\js\Archive\Detail\SetInvolvedProduct.js" />
+    <Content Include="assets\js\Archive\Detail\SetProductApplication.js" />
+    <Content Include="assets\js\Archive\Detail\SetProductHistory.js" />
+    <Content Include="assets\js\Archive\Detail\SetProductHistoryDetail.js" />
+    <Content Include="assets\js\Archive\Detail\SetProductProperty.js" />
+    <Content Include="assets\js\Archive\Detail\StartArchive.js" />
+    <Content Include="assets\js\Archive\router.js" />
+    <Content Include="assets\js\config.js" />
+    <Content Include="assets\js\Config\DownloadRight.js" />
+    <Content Include="assets\js\Config\MainClass.js" />
+    <Content Include="assets\js\Config\SubClass.js" />
+    <Content Include="assets\js\Config\SVGlobalRight.js" />
+    <Content Include="assets\js\Config\SVSpecialRight.js" />
+    <Content Include="assets\js\directives.js" />
+    <Content Include="assets\js\filters.js" />
+    <Content Include="assets\js\Home\FileQuery.js" />
+    <Content Include="assets\js\Home\ProductTable.js" />
+    <Content Include="assets\js\Home\Query.js" />
+    <Content Include="assets\js\Home\TaskList.js" />
+    <Content Include="assets\js\lib\bootstrap.js" />
+    <Content Include="assets\js\lib\bootstrap.min.js" />
+    <Content Include="assets\js\lib\html5shiv.min.js" />
+    <Content Include="assets\js\lib\jquery-1.11.3.js" />
+    <Content Include="assets\js\lib\jquery-1.11.3.min.js" />
+    <Content Include="assets\js\lib\jquery.plugins.js" />
+    <Content Include="assets\js\lib\jquery.tlayer.js" />
+    <Content Include="assets\js\lib\jquery.uploadify.js" />
+    <Content Include="assets\js\lib\jquery.uploadify.origin.js" />
+    <Content Include="assets\js\lib\require.js" />
+    <Content Include="assets\js\lib\require.min.js" />
+    <Content Include="assets\js\lib\respond.min.js" />
+    <Content Include="assets\js\lib\uploadify.swf" />
+    <Content Include="assets\js\lib\util.js" />
+    <Content Include="assets\js\Right\Index.js" />
+    <Content Include="assets\js\services.js" />
+    <Content Include="assets\js\ValueSet\Index.js" />
+    <Content Include="assets\plugins\angular-ui-router\angular-ui-router.min.js" />
+    <Content Include="assets\plugins\angular\angular.min.js" />
+    <Content Include="assets\plugins\datetimepicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="assets\plugins\datetimepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="assets\plugins\font-awesome\css\font-awesome.css" />
+    <Content Include="assets\plugins\font-awesome\css\font-awesome.min.css" />
+    <Content Include="assets\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="assets\plugins\selector\css\bootstrap-theme.min.css" />
+    <Content Include="assets\plugins\selector\css\bootstrap.min.css" />
+    <Content Include="assets\plugins\selector\css\common.css" />
+    <Content Include="assets\plugins\selector\css\img\line_conn.gif" />
+    <Content Include="assets\plugins\selector\css\img\loading.gif" />
+    <Content Include="assets\plugins\selector\css\img\zTreeStandard.gif" />
+    <Content Include="assets\plugins\selector\css\img\zTreeStandard.png" />
+    <Content Include="assets\plugins\selector\css\site.css" />
+    <Content Include="assets\plugins\selector\css\zTreeStyle.css" />
+    <Content Include="assets\plugins\selector\img\file.png" />
+    <Content Include="assets\plugins\selector\img\group.png" />
+    <Content Include="assets\plugins\selector\img\loading.gif" />
+    <Content Include="assets\plugins\selector\img\pro.png" />
+    <Content Include="assets\plugins\selector\img\waiting.gif" />
+    <Content Include="assets\plugins\selector\img\worker.png" />
+    <Content Include="assets\plugins\selector\js\jquery-1.11.3.min.js" />
+    <Content Include="assets\plugins\selector\js\jquery.ztree.all-3.5.min.js" />
+    <Content Include="assets\plugins\selector\js\main.js" />
+    <Content Include="assets\plugins\selector\js\multiDep.js" />
+    <Content Include="assets\plugins\selector\js\multiDepJob.js" />
+    <Content Include="assets\plugins\selector\js\multiJob.js" />
+    <Content Include="assets\plugins\selector\js\multiPeople.js" />
+    <Content Include="assets\plugins\selector\js\multiProduct.js" />
+    <Content Include="assets\plugins\selector\js\require.min.js" />
+    <Content Include="assets\plugins\selector\js\singleDep.js" />
+    <Content Include="assets\plugins\selector\js\singleDepJob.js" />
+    <Content Include="assets\plugins\selector\js\singleJob.js" />
+    <Content Include="assets\plugins\selector\js\singlePeople.js" />
+    <Content Include="assets\plugins\selector\js\singleProduct.js" />
+    <Content Include="assets\plugins\selector\js\util.js" />
+    <Content Include="assets\plugins\selector\multiDep.html" />
+    <Content Include="assets\plugins\selector\multiDepJob.html" />
+    <Content Include="assets\plugins\selector\multiJob.html" />
+    <Content Include="assets\plugins\selector\multiPeople.html" />
+    <Content Include="assets\plugins\selector\multiProduct.html" />
+    <Content Include="assets\plugins\selector\selector.html" />
+    <Content Include="assets\plugins\selector\selector.js" />
+    <Content Include="assets\plugins\selector\singleDep.html" />
+    <Content Include="assets\plugins\selector\singleDepJob.html" />
+    <Content Include="assets\plugins\selector\singleJob.html" />
+    <Content Include="assets\plugins\selector\singlePeople.html" />
+    <Content Include="assets\plugins\selector\singleProduct.html" />
+    <Content Include="assets\plugins\ui-bootstrap\ui-bootstrap-tpls-2.4.0.min.js" />
+    <Content Include="assets\plugins\ztree\img\line_conn.gif" />
+    <Content Include="assets\plugins\ztree\img\loading.gif" />
+    <Content Include="assets\plugins\ztree\img\zTreeStandard.gif" />
+    <Content Include="assets\plugins\ztree\img\zTreeStandard.png" />
+    <Content Include="assets\plugins\ztree\jquery.ztree.all-3.5.min.js" />
+    <Content Include="assets\plugins\ztree\zTreeStyle.css" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
@@ -138,9 +306,13 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ValueSetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\RightFilter.cs" />
+    <Compile Include="Models\UtilHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +321,27 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="assets\img\logo.psd" />
+    <Content Include="assets\img\logo_w.psd" />
+    <Content Include="assets\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\plugins\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="assets\plugins\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Common\Error.cshtml" />
+    <Content Include="Views\Home\FileQuery.cshtml" />
+    <Content Include="Views\Home\ProductTable.cshtml" />
+    <Content Include="Views\Home\Query.cshtml" />
+    <Content Include="Views\Home\TaskList.cshtml" />
+    <Content Include="Views\Right\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\ValueSet\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -158,8 +351,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SchoolCheckIn.CheckIn\SchoolCheckIn.CheckIn.csproj">
+      <Project>{28107645-b6c3-4c9f-a154-af65af2af3b2}</Project>
+      <Name>SchoolCheckIn.CheckIn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolCheckIn.Right\SchoolCheckIn.Right.csproj">
+      <Project>{f43aaee5-d70b-4331-af30-49edd2e5949c}</Project>
+      <Name>SchoolCheckIn.Right</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

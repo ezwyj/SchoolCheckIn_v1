@@ -1,0 +1,408 @@
+﻿@{
+    ViewBag.Title = "产品分表查询";
+}
+
+<div class="container-fluid" ng-init="init()">
+    <div class="page-nav">
+        <span class="fa fa-tag"></span>
+        <span class="page-nav-title">@ViewBag.Title</span>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>查询条件</h5>
+            <div class="block-option">
+                <button class="btn btn-sm btn-primary" ng-click="query()">
+                    <span class="fa fa-search"></span>
+                    <span>查询</span>
+                </button>
+            </div>
+        </div>
+        <div class="block-content">
+            <div class="row margin-bottom">
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name required">物品编码</label>
+                        <div class="item-control">
+                            <input type="text" class="form-control input-sm" ng-model="param.itemNumber" ng-change="onProChange()" auto-complete="itemNumberOpt" callback="selectPro(data)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name required">物品型号</label>
+                        <div class="item-control">
+                            <input type="text" class="form-control input-sm" ng-model="param.model" ng-change="onProChange()" auto-complete="modelOpt" callback="selectPro(data)">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name required">硬件版本</label>
+                        <div class="item-control">
+                            <select class="form-control input-sm" ng-options="item for item in hardwareRevList" ng-model="param.hardwareRev" ng-change="onRevChange()" ng-disabled="!hardwareRevList.length">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row margin-bottom">
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name">项目版本号</label>
+                        <div class="item-control">
+                            <select class="form-control input-sm" ng-options="item for item in projectCodeList" ng-model="param.projectCode" ng-change="onProjectCodeChange()" ng-disabled="!projectCodeList.length">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name">通知编号</label>
+                        <div class="item-control">
+                            <select class="form-control input-sm" ng-options="item for item in noticeNoList" ng-model="param.noticeNo" ng-change="onNoticeNoChange()" ng-disabled="!noticeNoList.length">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="item item-sm">
+                        <label class="item-name required">归档版本号</label>
+                        <div class="item-control">
+                            <select class="form-control input-sm" ng-options="item for item in archiveVersionCodeList" ng-model="param.archiveVersionCode" ng-disabled="!archiveVersionCodeList.length">
+                                <option value="">-</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>产品及软件版本信息</h5>
+        </div>
+        <div class="block-body info-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">项目版本号：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.ProjectCode"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">通知编号：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.NoticeNo"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="item item-sm">
+                        <label class="item-name">项目名称：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.ProjectName"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">归档发起人：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.Creator"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">归档发起时间：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.CreateTime | formatMSDate : 'YYYY-MM-DD hh:mm'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">归档版本号：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.ArchiveVersionCode"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">发布时间：</label>
+                        <div class="item-static">
+                            <span ng-bind="mainInfo.ReleaseTime | formatMSDate : 'YYYY-MM-DD hh:mm'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">物品编码：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.ItemNumber"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">物品型号：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.Model"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">硬件版本：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.HardwareRev"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">销售版本：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.SaleVersion"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">是否转产：</label>
+                        <div class="item-static">
+                            <span ng-bind="!pro ? '' : pro.IsTransferring ? '是' : '否'"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">发布类型：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.PublishTypeKey"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">版本类型：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.VersionType"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="item item-sm">
+                        <label class="item-name">版本状态：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.VersionStatus"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="item item-sm">
+                        <label class="item-name">物品描述：</label>
+                        <div class="item-static">
+                            <span ng-bind="pro.ItemDesc"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra-info" tab>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="">适用客户范围</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="">单板清单</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="">PCB清单</a>
+                    </li>
+                </ul>
+                <div class="tab-content margin-top">
+                    <div class="tab-pane active">
+                        <div class="item item-sm">
+                            <label class="item-name">适用省份：</label>
+                            <div class="item-static">
+                                <span ng-bind="pro.Province"></span>
+                            </div>
+                        </div>
+                        <div class="item item-sm">
+                            <label class="item-name">适用行业：</label>
+                            <div class="item-static">
+                                <span ng-bind="pro.Industry"></span>
+                            </div>
+                        </div>
+                        <div class="item item-sm">
+                            <label class="item-name">适用客户：</label>
+                            <div class="item-static">
+                                <span ng-bind="pro.Customer"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane">
+                        <div class="table-box">
+                            <table class="table table-colorheader table-outline">
+                                <thead>
+                                    <tr>
+                                        <th width="100">单板编码</th>
+                                        <th width="100">硬件版本</th>
+                                        <th>物品描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in pro.VeneerList">
+                                        <td>
+                                            <span ng-bind="item.ItemNumber"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-bind="item.HardwareRev"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-bind="item.ItemDesc"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane">
+                        <div class="table-box">
+                            <table class="table table-colorheader table-outline">
+                                <thead>
+                                    <tr>
+                                        <th width="100">PCP编码</th>
+                                        <th width="100">硬件版本</th>
+                                        <th>物品描述</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in pro.PcbList">
+                                        <td>
+                                            <span ng-bind="item.ItemNumber"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-bind="item.HardwareRev"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-bind="item.ItemDesc"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block">
+        <div class="block-header">
+            <h5>产品分表</h5>
+        </div>
+        <div class="block-body">
+            <div class="row option-bar">
+                <div class="col-md-6 form-inline">
+                    <label>显示</label>
+                    <select class="form-control input-sm" ng-model="filter" ng-change="filterFileList()">
+                        <option value="0">全部</option>
+                        <option value="1">可下载文件类别</option>
+                        <option value="2">不可下载文件类别</option>
+                        <option value="3">不适用文件类别</option>
+                    </select>
+                </div>
+                <div class="col-md-6 text-right" ng-click="batchDownload()">
+                    <button class="btn btn-sm btn-default">
+                        <span class="fa fa-download"></span>
+                        <span>批量下载</span>
+                    </button>
+                </div>
+            </div>
+            <div class="table-box">
+                <table class="table table-outline table-colorheader">
+                    <thead>
+                        <tr>
+                            <th width="40">
+                                <input type="checkbox" class="checkbox-b" ng-model="IsCheckedAll" ng-change="checkAll(IsCheckedAll)">
+                            </th>
+                            <th width="100">文件大类</th>
+                            <th width="200">文件小类</th>
+                            <th width="50">适用</th>
+                            <th>文件名称</th>
+                            <th width="70">版本号</th>
+                            <th width="70">文件类型</th>
+                            <th width="200">版本分支</th>
+                            <th width="70">归档人</th>
+                            <th width="120">归档时间</th>
+                            <th width="70">复核人</th>
+                            <th width="120">复核时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in fileList">
+                            <td>
+                                <input type="checkbox" class="checkbox-b" ng-if="item.IsApply && item.IsDownload" ng-model="item.IsChecked">
+                            </td>
+                            <td>
+                                <div text-truncation="item.MainClassName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.SubClassName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.IsApply ? '是' : '否'"></div>
+                            </td>
+                            <td>
+                                <div class="text-ellipsis">
+                                    <span ng-if="!item.IsDownload" ng-bind="item.FileName"></span>
+                                    <a href="" target="_blank" ng-if="item.IsDownload" ng-bind="item.FileName" ng-click="download(item, $event)"></a>
+                                </div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.FileVersion"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.FileType"></div>
+                            </td>
+                            <td>
+                                <span class="view-more" ng-if="item.VersionBranch" uib-popover-html="item.VersionBranch | toTrustHtml" popover-trigger="'outsideClick'">查看</span>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveUserName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ArchiveTime | formatMSDate : 'YYYY-MM-DD hh:mm'"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ReviewUserName"></div>
+                            </td>
+                            <td>
+                                <div text-truncation="item.ReviewTime | formatMSDate : 'YYYY-MM-DD hh:mm'"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+</div>
+
+@section scripts {
+    <script src="~/assets/js/Home/ProductTable.js?v=@UtilHelper.StaticVersion"></script>
+}

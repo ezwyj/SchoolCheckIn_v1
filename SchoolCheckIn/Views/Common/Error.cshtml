@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "错误提示";
+}
+
+<div class="container error-conainer">
+    <div class="table-row">
+        <div class="table-cell error-img-box">
+            <img src="~/assets/img/error_page.png" alt="error">
+        </div>
+        <div class="table-cell error-msg-box">
+            <h3 class="error-msg">@Html.Raw((ViewBag.errorCode != null ? ViewBag.errorCode + "！" : "") + ViewBag.errorMsg)</h3>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        require(['app'], function (angular) {
+            var app = angular.module('app');
+
+            app.controller('pageCtrl', function () { });
+
+            // 控制器最后启动模块
+            angular.bootstrap(document, ['app']);
+        });
+    </script>
+}
