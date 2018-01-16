@@ -307,6 +307,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\ValueSetController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -342,6 +343,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ValueSet\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Common\SelectPerson.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -351,6 +353,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="FileUpload\" />
+    <Folder Include="Views\Students\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SchoolCheckIn.CheckIn\SchoolCheckIn.CheckIn.csproj">
@@ -360,6 +364,10 @@
     <ProjectReference Include="..\SchoolCheckIn.Right\SchoolCheckIn.Right.csproj">
       <Project>{f43aaee5-d70b-4331-af30-49edd2e5949c}</Project>
       <Name>SchoolCheckIn.Right</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchoolCheckIn.ValueSets\SchoolCheckIn.ValueSets.csproj">
+      <Project>{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}</Project>
+      <Name>SchoolCheckIn.ValueSets</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

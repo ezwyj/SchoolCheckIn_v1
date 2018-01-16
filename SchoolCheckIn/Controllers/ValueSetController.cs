@@ -1,4 +1,5 @@
 ﻿using SchoolCheckIn.Models;
+using SchoolCheckIn.ValueSets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,24 +29,23 @@ namespace SchoolCheckIn.Controllers
         [RightFilter("值集设置", "Save", true)]
         public ActionResult CreateValueSet(string json)
         {
-            if (string.IsNullOrWhiteSpace(json))
+            string Msg = string.Empty;
+            try
             {
-                return Json(new { State = false, Msg = "保存的内容为空。" }, JsonRequestBehavior.AllowGet);
+                if (string.IsNullOrWhiteSpace(json))
+                {
+                    Msg = "保存的内容为空。";
+                }
+                var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueSet>(json);
+                var svc = new ValueSetService();
+                string user = HttpContext.User.Identity.Name;
+                svc.CreateValueSet(v.Name, v.Description, user);
+                return Json(new { State = false, Msg = "" }, JsonRequestBehavior.AllowGet);
             }
-
-            var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueSet>(json);
-            var svc = new ProjectArchive.ValueSet.Service.ValueSetService();
-            string msg = string.Empty;
-            var user = UserEntity.GetCurrentUser();
-
-            var rst = svc.CreateValueSet(v.Text, v.Description, user.Name, user.Badge);
-
-            if (!string.IsNullOrWhiteSpace(msg))
+            catch(Exception e)
             {
-                return Json(new { State = false, Msg = msg }, JsonRequestBehavior.AllowGet);
+                return Json(new { State = false, Msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
-
-            return Json(new { State = true, Msg = string.Empty, Data = rst }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -56,32 +56,17 @@ namespace SchoolCheckIn.Controllers
         [RightFilter("值集设置", "Save", true)]
         public ActionResult CreateValueItem(string json)
         {
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                return Json(new { State = false, Msg = "保存的内容为空。" }, JsonRequestBehavior.AllowGet);
-            }
-
-            var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueItem>(json);
-            var svc = new ValueSetService();
-            string msg = string.Empty;
-            var user = UserEntity.GetCurrentUser();
-            v.CreateTime = DateTime.Now;
-            v.Creator = user.Name;
-            v.CreatorId = user.Badge;
-
-            ProjectArchive.ValueSet.Entity.ValueItem rst = new ValueItem();
             try
             {
-                rst = svc.CreateItem(v);
+                var vi = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueItem>(json);
+                var svc = new ValueSetService();
+                svc.SaveValueItem(vi);
+                return Json(new { State = false, Msg = "" }, JsonRequestBehavior.AllowGet);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                msg = e.Message;
+                return Json(new { State = false, Msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
-
-
-
-            return Json(new { State = true, Msg = msg, Data = rst }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -93,23 +78,16 @@ namespace SchoolCheckIn.Controllers
         [RightFilter("值集设置", "Delete", true)]
         public ActionResult DeleteValueItem(int id)
         {
-            var svc = new ValueSetService();
-
-            var user = UserEntity.GetCurrentUser();
-            bool retState = false;
-            string msg = string.Empty;
             try
             {
+                var svc = new ValueSetService();
                 svc.DeleteValueItem(id);
-                retState = true;
+                return Json(new { State = false, Msg = "" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                msg = e.Message;
+                return Json(new { State = false, Msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
-
-
-            return Json(new { State = retState, Msg = msg }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -122,20 +100,17 @@ namespace SchoolCheckIn.Controllers
         {
             var svc = new ValueSetService();
 
-            var user = UserEntity.GetCurrentUser();
-            bool retState = false;
-            string msg = string.Empty;
             try
             {
-                svc.DeleteValueSet(id);
-                retState = true;
+                svc.DeteValueSet(id);
+
             }
             catch (Exception e)
             {
-                msg = e.Message;
+                return Json(new { State = false, Msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { State = retState, Msg = msg }, JsonRequestBehavior.AllowGet);
+            return Json(new { State = true, Msg = "" }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -152,16 +127,14 @@ namespace SchoolCheckIn.Controllers
             }
 
             var svc = new ValueSetService();
-            string msg = string.Empty;
+            var vItem = svc.GetValueItemByID(id);
 
-            var vs = svc.GetValueItemByID(id);
-
-            if (vs == null)
+            if (vItem == null)
             {
                 return Json(new { State = false, Msg = "值集不存在。" }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { State = true, Msg = string.Empty, Data = vs }, JsonRequestBehavior.AllowGet);
+            return Json(new { State = true, Msg = string.Empty, Data = vItem }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -171,7 +144,8 @@ namespace SchoolCheckIn.Controllers
         [RightFilter("值集设置", "Select", true)]
         public JsonResult GetValueItemList(int valueSetId)
         {
-            var list = ValueSetService.GetValueItemList(valueSetId);
+            var svc = new ValueSetService();
+            var list = svc.GetValueItemList(valueSetId);
             return Json(new { State = true, Msg = string.Empty, Data = list }, JsonRequestBehavior.AllowGet);
         }
 
@@ -182,32 +156,12 @@ namespace SchoolCheckIn.Controllers
         /// <returns></returns>
         public JsonResult GetValueItemListForUse(int valueSetId)
         {
-            var list = ValueSetService.GetValueItemList(valueSetId).FindAll(a => a.IsEnabled);
+            var svc = new ValueSetService();
+            var list = svc.GetValueItemList(valueSetId).FindAll(a => a.IsEnabled);
             return Json(new { State = true, Msg = string.Empty, Data = list }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// 获取值集列表
-        /// </summary>
-        /// <param name="name">名称</param>
-        /// <param name="enabledFlag">启用标志</param>
-        /// <returns></returns>
-        [RightFilter("值集设置", "Select", true)]
-        public JsonResult GetValueItemListByName(string name, string enabledFlag)
-        {
-            var vs = ProjectArchive.ValueSet.Entity.ValueSet.GetListByProperty(o => o.Text, name).Where(o => o.IsDelete == false).FirstOrDefault();
-            var list =
-                ValueItem.GetListByProperty(o => o.SetId, vs.Id)
-                    .Where(o => o.IsDelete == false)
-                    .OrderBy(o => o.Sort)
-                    .ToList();
-
-            list = list.Where(o => o.IsEnabled == bool.Parse(enabledFlag)).ToList();
-
-
-            return Json(new { State = true, Message = string.Empty, Data = list }, JsonRequestBehavior.AllowGet);
-        }
-
+       
 
         /// <summary>
         /// 根据ID获取值合
@@ -250,9 +204,6 @@ namespace SchoolCheckIn.Controllers
             }
 
             var svc = new ValueSetService();
-            string msg = string.Empty;
-            var user = UserEntity.GetCurrentUser();
-
             var vs = svc.GetValueSetByName(name);
 
             if (vs == null)
@@ -263,39 +214,7 @@ namespace SchoolCheckIn.Controllers
             return Json(new { State = true, Msg = string.Empty, Data = vs }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// 获取集列表
-        /// </summary>
-        /// <returns></returns>
-        [RightFilter("值集设置", "Select", true)]
-        public JsonResult GetValueSetList()
-        {
-            var db = ProjectArchive.ValueSet.Entity.ValueSet.DefaultDB;
-
-            var rst = new List<ProjectArchive.ValueSet.Entity.ValueSet>();
-            try
-            {
-                rst = db.Fetch<ProjectArchive.ValueSet.Entity.ValueSet>("where SetId is null and isdelete=0 order by Sort").ToList();
-            }
-            catch (Exception ex)
-            {
-
-                return Json(new { State = false, Msg = "查询失败。" + ex.Message }, JsonRequestBehavior.AllowGet);
-            }
-
-
-
-            return
-                Json(
-                    new
-                    {
-                        State = true,
-                        Msg = string.Empty,
-                        Data = rst
-                    },
-                    JsonRequestBehavior.AllowGet);
-        }
-
+        
         /// <summary>
         /// 保存值集项目
         /// </summary>
@@ -306,32 +225,27 @@ namespace SchoolCheckIn.Controllers
         {
             var svc = new ValueSetService();
 
-            var user = UserEntity.GetCurrentUser();
+           
             if (string.IsNullOrWhiteSpace(json))
             {
                 return Json(new { State = false, Msg = "保存的内容为空。" }, JsonRequestBehavior.AllowGet);
             }
 
             var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueItem>(json);
-            bool retState = false;
-
-            string msg = string.Empty;
             try
             {
-                v.Creator = user.Name;
-                v.CreatorId = user.Badge;
-                v.CreateTime = DateTime.Now;
+
                 svc.SaveValueItem(v);
-                retState = true;
+
             }
             catch (Exception e)
             {
-                msg = e.Message;
+                return Json(new { State = false, Msg = e.Message }, JsonRequestBehavior.AllowGet);
             }
 
 
 
-            return Json(new { State = retState, Msg = msg, Data = v }, JsonRequestBehavior.AllowGet);
+            return Json(new { State = true, Msg = "", Data = v }, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -344,32 +258,25 @@ namespace SchoolCheckIn.Controllers
         {
             var svc = new ValueSetService();
 
-            var user = UserEntity.GetCurrentUser();
             if (string.IsNullOrWhiteSpace(json))
             {
                 return Json(new { State = false, Msg = "保存的内容为空。" }, JsonRequestBehavior.AllowGet);
             }
 
-            var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ProjectArchive.ValueSet.Entity.ValueSet>(json);
-
-            string msg = string.Empty;
-            bool retState = false;
+            var v = Newtonsoft.Json.JsonConvert.DeserializeObject<ValueSet>(json);
             try
             {
-                v.CreateTime = DateTime.Now;
-                v.CreatorID = user.Badge;
-                v.Creator = user.Name;
+
                 svc.SaveValueSet(v);
-                retState = true;
             }
             catch (Exception e)
             {
-                msg = e.Message;
+                return Json(new { State = false, Msg = e.Message, Data = v }, JsonRequestBehavior.AllowGet);
             }
 
 
 
-            return Json(new { State = retState, Msg = msg, Data = v }, JsonRequestBehavior.AllowGet);
+            return Json(new { State = true, Msg = "", Data = v }, JsonRequestBehavior.AllowGet);
         }
     }
 }

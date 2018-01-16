@@ -52,6 +52,10 @@
       <Project>{28107645-b6c3-4c9f-a154-af65af2af3b2}</Project>
       <Name>SchoolCheckIn.CheckIn</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SchoolCheckIn.Common\SchoolCheckIn.Common.csproj">
+      <Project>{4465d0e8-bf50-43d5-b4ac-484b4593c309}</Project>
+      <Name>SchoolCheckIn.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

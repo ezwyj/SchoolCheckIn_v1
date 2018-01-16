@@ -19,9 +19,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckIn.Weixin", "Sch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckIn.Class", "SchoolCheckIn.Class\SchoolCheckIn.Class.csproj", "{67F9EAB4-E127-4AB6-B754-8C19D481D1C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckInStudent", "SchoolCheckInStudent\SchoolCheckInStudent.csproj", "{91E3B530-C8BB-4B46-8DFA-14C4A6B19FD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckIn.Student", "SchoolCheckInStudent\SchoolCheckIn.Student.csproj", "{91E3B530-C8BB-4B46-8DFA-14C4A6B19FD9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckIn.School", "SchoolCheckIn.School\SchoolCheckIn.School.csproj", "{5B42C2A4-CAA6-4F30-8CFF-27E8EB302B81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolCheckIn.ValueSets", "SchoolCheckIn.ValueSets\SchoolCheckIn.ValueSets.csproj", "{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{5B42C2A4-CAA6-4F30-8CFF-27E8EB302B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B42C2A4-CAA6-4F30-8CFF-27E8EB302B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B42C2A4-CAA6-4F30-8CFF-27E8EB302B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A4FCAD3-0219-4BE1-8DE2-BC0F4F30F941}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

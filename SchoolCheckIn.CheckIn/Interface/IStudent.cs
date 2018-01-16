@@ -9,13 +9,14 @@ namespace SchoolCheckIn.CheckIn.Interface
 {
     public interface IStudent
     {
-        void ImportStudent(string file);
-        void DeleteStuent(Student student);
+        string ImportStudent(string file);
+        void DeleteStuent(int studentId);
         void SaveStudent(Student student);
-        Student GetStudent(int id);
-        List<Student> GetStudentList(string name,string className,DateTime startClassTime,DateTime endClassTime);
+        dynamic GetStudent(int id);
+        dynamic GetStudentList(string name,string className,DateTime startClassTime,DateTime endClassTime);
         void AddClass(Class classinfo);
+        void AddClass(List<Class> classInfoes);
         void DeleteClass(Class classInfo);
-
+        void Student(PetaPoco.Database db);
     }
 }

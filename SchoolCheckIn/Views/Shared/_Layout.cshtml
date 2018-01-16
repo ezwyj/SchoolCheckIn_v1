@@ -69,55 +69,48 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li ng-class="{active: path == ''}">
-                            <a href="~/">任务列表</a>
+                            <a href="~/">今日签到</a>
                         </li>
                         <li ng-class="{active: path.indexOf('Archive/Create') > -1}">
-                            <a href="~/Archive/Create">发起版本归档</a>
+                            <a href="~/Home/R">课程统计</a>
                         </li>
-                        <li ng-class="{active: path == 'Home/ProductTable' || path == 'Home/Query' || path == 'Home/FileQuery'}">
-                            <a>系统查询</a>
+                        <li ng-class="{active: path == 'Home/Student' || path == 'Home/Class' || path == 'Home/FileQuery'}">
+                            <a>基础管理</a>
                             <div class="submenu-box">
                                 <ul class="submenu-list">
                                     <li>
-                                        <a href="~/Home/ProductTable">产品分表查询</a>
+                                        <a href="~/Manage/StudentManage">学生管理</a>
                                     </li>
                                     <li>
-                                        <a href="~/Home/Query">综合查询</a>
+                                        <a href="~/Manage/ClassManage">课程管理</a>
                                     </li>
                                     <li>
-                                        <a href="~/Home/FileQuery">文件适用项目及产品查询</a>
+                                        <a href="~/Manage/CheckInManage">签到管理</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li ng-class="{active: path.indexOf('Config/') > -1}">
-                            <a>系统设置</a>
+                            <a>系统管理</a>
                             <div class="submenu-box">
                                 <ul class="submenu-list">
                                     <li>
-                                        <a href="~/Config/MainClass">大类设置</a>
+                                        <a href="~/Config/MainClass">学校配置</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/SubClass">小类设置</a>
+                                        <a href="~/Config/SubClass">用户管理</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/DownloadRight">文件下载权限设置</a>
+                                        <a href="~/Config/DownloadRight">权限设置</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/SVGlobalRight">重大测试版本通用设置</a>
+                                        <a href="~/Config/SVGlobalRight">值集设置</a>
                                     </li>
-                                    <li>
-                                        <a href="~/Config/SVSpecialRight">重大测试版本专用设置</a>
-                                    </li>
+                                    
                                 </ul>
                             </div>
                         </li>
-                        <li ng-class="{active: path == 'ValueSet/Index'}">
-                            <a href="~/ValueSet/Index">值集设置</a>
-                        </li>
-                        <li ng-class="{active: path == 'Right/Index'}">
-                            <a href="~/Right/Index">权限设置</a>
-                        </li>
+                        
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

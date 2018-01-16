@@ -12,8 +12,11 @@ namespace SchoolCheckIn.CheckIn.Interface
         void SaveClass(Class classInfo);
         void DeleteClass(Class classInfo);
         List<Class> GetClassList(string name);
+        Class GetClass(int id);
         void ImportClass(string file);
-        void BatchBuildClass(Class classInfo, CycleEnum cycle);
+        void BatchBuildClass(Class classInfo,DateTime startTime, CycleEnum cycle,int time);
+        void Class(PetaPoco.Database db);
+        List<Class> GetClassListByStudent(Student student);
     }
 
     public enum CycleEnum

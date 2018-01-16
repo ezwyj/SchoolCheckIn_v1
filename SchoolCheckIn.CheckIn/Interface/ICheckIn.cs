@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+
+using System.Drawing;
 
 namespace SchoolCheckIn.CheckIn.Interface
 {
@@ -14,7 +15,8 @@ namespace SchoolCheckIn.CheckIn.Interface
         Student CheckIn(Image image);
         List<CheckIn.Model.CheckIn> GetCheckInList(DateTime datetime);
         List<CheckIn.Model.CheckIn> GetCheckInList(Student student);
-        
+
+        void CheckIn(PetaPoco.Database db);
 
     }
 }
