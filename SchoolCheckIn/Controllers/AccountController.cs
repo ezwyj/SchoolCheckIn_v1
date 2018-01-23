@@ -36,11 +36,7 @@ namespace SchoolCheckIn.Controllers
             }
             
             returnUrl = string.IsNullOrWhiteSpace(returnUrl) ? System.Web.Security.FormsAuthentication.DefaultUrl : returnUrl;
-            if (System.Configuration.ConfigurationManager.AppSettings["NeedPwd"] != "true")
-            {
-                System.Web.Security.FormsAuthentication.SetAuthCookie(username, false);
-                return Redirect(returnUrl);
-            }
+           
 
             string msg = string.Empty;
             PetaPoco.Database db = new PetaPoco.Database("DatabaseConn");
@@ -48,8 +44,10 @@ namespace SchoolCheckIn.Controllers
 
             if ( ars.Login(username, password))
             {
-                System.Web.Security.FormsAuthentication.SetAuthCookie(username, true);
-                return Redirect(returnUrl);
+                var user = ars.GetUserByBadge(username);
+
+                System.Web.Security.FormsAuthentication.SetAuthCookie(user.Badge+":"+user.UserName , true);
+                return RedirectToAction("Index", "Home");
             }
             else
             {

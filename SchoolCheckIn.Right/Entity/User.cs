@@ -17,5 +17,6 @@ namespace SchoolCheckIn.Right.Entity
         public string UserName { get; set; }
         public string Badge { get; set; }
         public string Department { get; set; }
+        public string password { get; set; }
     }
 }

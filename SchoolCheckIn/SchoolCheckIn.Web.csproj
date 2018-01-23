@@ -307,6 +307,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\SchoolController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RightController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\ValueSetController.cs" />
     <Compile Include="Global.asax.cs">
@@ -338,7 +341,7 @@
     <Content Include="Views\Home\FileQuery.cshtml" />
     <Content Include="Views\Home\ProductTable.cshtml" />
     <Content Include="Views\Home\Query.cshtml" />
-    <Content Include="Views\Home\TaskList.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Right\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ValueSet\Index.cshtml" />
@@ -354,6 +357,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="FileUpload\" />
+    <Folder Include="Views\Config\" />
     <Folder Include="Views\Students\" />
   </ItemGroup>
   <ItemGroup>

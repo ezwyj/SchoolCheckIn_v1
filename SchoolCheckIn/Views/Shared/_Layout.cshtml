@@ -1,14 +1,18 @@
 ﻿@using SchoolCheckIn.CheckIn.Model;
 @{
-    var user = new UserEntity();
+    var badgeName = HttpContext.Current.User;
+    string badge = string.Empty, name = string.Empty;
     try
     {
-        user = UserEntity.GetCurrentUser();
-        if (user == null)
+
+        if (!badgeName.Identity.IsAuthenticated)
         {
             Response.Redirect("~/Account/Login?errorMsg=用户信息错误，请重新登录");
             return;
         }
+        string[] arr = badgeName.Identity.Name.Split(':');
+        badge = arr[0];
+        name = arr[1];
     }
     catch (Exception)
     {
@@ -43,7 +47,7 @@
     <![endif]-->
     <script>
         var OP_CONFIG = {
-            badge: '@user.Badge',
+            badge: '@badge',
             rootUrl: '@Url.Content("~/")',
             staticVersion: '@UtilHelper.StaticVersion'
         };
@@ -95,16 +99,16 @@
                             <div class="submenu-box">
                                 <ul class="submenu-list">
                                     <li>
-                                        <a href="~/Config/MainClass">学校配置</a>
+                                        <a href="~/School/Index">学校配置</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/SubClass">用户管理</a>
+                                        <a href="~/Account/UserManage">用户管理</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/DownloadRight">权限设置</a>
+                                        <a href="~/Right/Index">权限设置</a>
                                     </li>
                                     <li>
-                                        <a href="~/Config/SVGlobalRight">值集设置</a>
+                                        <a href="~/ValueSet/Index">值集设置</a>
                                     </li>
                                     
                                 </ul>
@@ -116,7 +120,7 @@
                         <li>
                             <div class="navbar-text">
                                 <img class="avatar" src="~/assets/img/avatar.png" alt="头像">
-                                <span>欢迎您，@user.Name</span>
+                                <span>欢迎您，@name</span>
                             </div>
                         </li>
                         <li>
@@ -133,7 +137,7 @@
     </div>
     <!--脚部-->
     <div class="footer" id="footer">
-        <p class="text-center">&copy; 2016 - @DateTime.Now.Year @ViewBag[""]</p>
+        <p class="text-center">&copy; 2016 - @DateTime.Now.Year </p>
     </div>
     @RenderSection("scripts", false)
 </body>
